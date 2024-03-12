@@ -34,5 +34,10 @@ public class MainRoute extends RouteBuilder {
                         System.out.println("ouput is: " + out);
                     }
                 });
+        from("kafka:mySuperRoute:9092?brokers=localhost:9092&groupId=hello")
+                .routeId("Kafka consumer")
+                .log("${body}")
+                .setHeader("storateName", simple("${exchangeId}"))
+                .to("bean:myBean?method=bye");
     }
 }
